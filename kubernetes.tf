@@ -5,36 +5,58 @@ terraform {
     }
   }
 }
+
+variable "host" {
+  type = string
+}
+
+variable "client_certificate" {
+  type = string
+}
+
+variable "client_key" {
+  type = string
+}
+
+variable "cluster_ca_certificate" {
+  type = string
+}
+
 provider "kubernetes" {
   config_path = "~/.kube/config"
+
 }
-resource "kubernetes_deployment" "nginx" {
+
+resource "kubernetes_deployment" "flask" {
   metadata {
-    name = "scalable-nginx-example"
+    name = "flask-deployment"
     labels = {
-      App = "ScalableNginxExample"
+      App = "Scalableflask"
     }
   }
+
   spec {
-    replicas = 4
+    replicas = 5
     selector {
       match_labels = {
-        App = "ScalableNginxExample"
+        App = "Scalableflask"
       }
     }
     template {
       metadata {
         labels = {
-          App = "ScalableNginxExample"
+          App = "Scalableflask"
         }
       }
       spec {
         container {
-          image = "nginx:1.7.8"
-          name  = "example"
+          image = "211896/terraform-flask-app"
+          name  = "flaskapp"
+
           port {
-            container_port = 80
+            container_port = 9090
           }
+
           resources {
             limits = {
               cpu    = "0.5"
@@ -42,7 +64,7 @@ resource "kubernetes_deployment" "nginx" {
             }
             requests = {
               cpu    = "250m"
-              memory = "128Mi"
+              memory = "50Mi"
             }
           }
         }
@@ -50,21 +72,20 @@ resource "kubernetes_deployment" "nginx" {
     }
   }
 }
-resource "kubernetes_service" "nginx" {
+resource "kubernetes_service" "flask" {
   metadata {
-    name = "nginx-example"
+    name = "flask-service"
   }
   spec {
     selector = {
-      App = kubernetes_deployment.nginx.spec.0.template.0.metadata[0].labels.App
+      App = kubernetes_deployment.flask.spec.0.template.0.metadata[0].labels.App
     }
     port {
       node_port   = 30201
-      port        = 80
-      target_port = 80
+      port        = 9090
+      target_port = 9090
     }
+
     type = "NodePort"
   }
 }
-
-
