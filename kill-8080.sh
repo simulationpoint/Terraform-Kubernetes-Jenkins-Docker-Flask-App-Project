@@ -8,3 +8,6 @@ kill -kill `lsof -t -i tcp:5000`
 kill -kill `lsof -t -i tcp:4200`
 kill -kill `lsof -t -i tcp:3000`
 kill -kill `lsof -t -i tcp:3036`
+kill -kill `lsof -t -i tcp:9090`
+kill -kill `lsof -t -i tcp:9095`
+kill -kill `lsof -t -i tcp:80`
