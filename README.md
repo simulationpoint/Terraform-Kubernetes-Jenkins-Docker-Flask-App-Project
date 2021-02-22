@@ -79,7 +79,7 @@
 
 * Add the following to a file `kubernetes.tf`
 
-		  resource "kubernetes_deployment" "nginx" {
+		resource "kubernetes_deployment" "nginx" {
 		  metadata {
 		    name = "scalable-nginx-example"
 		    labels = {
@@ -87,7 +87,7 @@
 		    }
 		  }
 		  spec {
-		    replicas = 2
+		    replicas = 4
 		    selector {
 		      match_labels = {
 		        App = "ScalableNginxExample"
@@ -136,8 +136,8 @@
 		    }
 		    type = "NodePort"
 		  }
-		}
-			
+		}	
+				
 * [Use the magic command]() `terraform apply`
 
 * `http://localhost:30201/`
