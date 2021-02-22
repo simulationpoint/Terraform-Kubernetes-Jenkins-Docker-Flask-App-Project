@@ -16,6 +16,25 @@
 
 		brew install kind
 		
+		
+* Build the image
+		
+* Now that we have a Dockerfile. 
+		
+		docker build -t terraform-flask-app:latest .
+		
+* After the build completes, we can run the container:
+		
+		docker run -d -p 8080:8080 -p 5000:5000 terraform-flask-app
+		
+		docker login --username USERNAME
+		
+		docker tag my-image USERNAME/my-repo
+
+		docker push USERNAME/my-repo
+
+
+		
 * `touch kind-config.yaml` and put the following config file in it
 
 		kind: Cluster
