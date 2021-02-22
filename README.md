@@ -156,7 +156,7 @@
 
 ![terraform](./src/terraform/13.png)
 
-![terraform](./src/terraform/14.png)
+![terraform](./src/flaskapp/final.png)
 
 * `terraform destroy`
 * `kind delete cluster --name terraform-learn`
