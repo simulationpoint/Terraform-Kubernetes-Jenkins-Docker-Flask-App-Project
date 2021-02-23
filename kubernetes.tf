@@ -6,75 +6,13 @@ terraform {
   }
 }
 
-variable "host" {
-  type = string
-}
-
-variable "client_certificate" {
-  type = string
-}
-
-variable "client_key" {
-  type = string
-}
-
-variable "cluster_ca_certificate" {
-  type = string
-}
-
 provider "kubernetes" {
-  config_path = "~/.kube/config"
-
+   config_path = "~/.kube/config"
 }
 
-resource "kubernetes_deployment" "flask" {
+resource "kubernetes_services" "flask" {
   metadata {
-    name = "flask-deployment"
-    labels = {
-      App = "Scalableflask"
-    }
-  }
-
-  spec {
-    replicas = 5
-    selector {
-      match_labels = {
-        App = "Scalableflask"
-      }
-    }
-    template {
-      metadata {
-        labels = {
-          App = "Scalableflask"
-        }
-      }
-      spec {
-        container {
-          image = "211896/terraform-flask-app"
-          name  = "flaskapp"
-
-          port {
-            container_port = 9090
-          }
-
-          resources {
-            limits = {
-              cpu    = "0.5"
-              memory = "512Mi"
-            }
-            requests = {
-              cpu    = "250m"
-              memory = "50Mi"
-            }
-          }
-        }
-      }
-    }
-  }
-}
-resource "kubernetes_service" "flask" {
-  metadata {
-    name = "flask-service"
+    name = "flask-app"
   }
   spec {
     selector = {
@@ -87,5 +25,50 @@ resource "kubernetes_service" "flask" {
     }
 
     type = "NodePort"
+  }
+}
+
+resource "kubernetes_deployment" "flask" {
+  metadata {
+    name = "scalable-flask-app"
+    labels = {
+      App = "ScalableFlaskApp"
+    }
+  }
+
+  spec {
+    replicas = 2
+    selector {
+      match_labels = {
+        App = "ScalableFlaskApp"
+      }
+    }
+    template {
+      metadata {
+        labels = {
+          App = "ScalableFlaskApp"
+        }
+      }
+      spec {
+        container {
+          image = "211896/terraform-flask-app"
+          name  = "flaskApp"
+
+          port {
+            container_port = 9090
+          }
+          resources {
+            limits = {
+              cpu    = "1"
+              memory = "512Mi"
+            }
+            requests = {
+              cpu    = "500m"
+              memory = "100Mi"
+            }
+          }
+        }
+      }
+    }
   }
 }

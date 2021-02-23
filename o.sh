@@ -1,3 +1,3 @@
 git add .
-git commit -m "update"
+git commit -m "version 1.0"
 git push   
