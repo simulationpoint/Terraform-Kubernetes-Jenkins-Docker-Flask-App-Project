@@ -1,7 +1,7 @@
+// Jesh Amera Feb 21/2020
+
 Pipeline {
-
-node () {
-
+node() {
     stage ('Checkout SCM') {
      checkout([$class: 'GitSCM', 
      	branches: [[name: '*/master']], 
@@ -10,12 +10,10 @@ node () {
      	submoduleCfg: [], 
      	userRemoteConfigs: [[credentialsId: '', 
      	url: 'https://github.com/simulationpoint/Terraform-Kubernetes-Jenkins-Docker-Flask-App-Project.git']]]) 
-     }
-    stage ('TF init then TF apply') {
-     // Shell build step
-     sh """
+    	 }
+   	stage ('TF init & TF apply') {
+	sh """
 	# cd to cloned repo and check pull SCM
-	
 	cd ~/Desktop/Terraform-Kubernetes-Jenkins-Docker-Flask-App-Project
 	git pull https://github.com/simulationpoint/Terraform-Kubernetes-Jenkins-Docker-Flask-App-Project.git
 
