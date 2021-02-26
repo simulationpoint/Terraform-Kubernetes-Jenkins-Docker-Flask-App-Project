@@ -51,7 +51,7 @@ resource "kubernetes_deployment" "flask" {
       }
       spec {
         container {
-          image = "211896/terraform-flask-app"
+          image = "sarankaja/kubesba"
           name  = "flaskApp"
 
           port {
