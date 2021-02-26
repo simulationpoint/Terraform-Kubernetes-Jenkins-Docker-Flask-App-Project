@@ -15,16 +15,14 @@ node () {
      // Shell build step
      sh """
 	# cd to cloned repo and check pull SCM
-
-	cd ~/Terraform-Kubernetes-Jenkins-Docker-Flask-App-Project
+	
+	cd ~/Desktop/Terraform-Kubernetes-Jenkins-Docker-Flask-App-Project
 	git pull https://github.com/simulationpoint/Terraform-Kubernetes-Jenkins-Docker-Flask-App-Project.git
 
 	# apply terraform
-
-	ls
-	docker ps
+	
 	terraform apply -auto-approve
 	""" 
       }
-	}
+   }
 }
